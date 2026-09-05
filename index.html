@@ -1391,10 +1391,741 @@
   @media (pointer: coarse){
     .click-ripple{ display:none; }
   }
+
+/* ============================================================
+   RainSMP 2.0 — premium polish layer
+   ============================================================ */
+:root{
+  --glass:rgba(12,18,30,.68);
+  --glass-strong:rgba(16,25,40,.84);
+  --shadow-xl:0 30px 90px -45px rgba(0,0,0,.82);
+  --ease:cubic-bezier(.22,.8,.2,1);
+}
+body{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(99,201,236,.055),transparent 34%),
+    var(--bg);
+}
+#app{isolation:isolate}
+.wrap{max-width:1240px}
+header.nav{
+  box-shadow:0 1px 0 rgba(255,255,255,.018);
+  background:rgba(7,11,19,.62);
+}
+header.nav.scrolled .nav-inner{
+  box-shadow:0 18px 55px -25px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.035);
+}
+.btn{
+  position:relative;
+  overflow:hidden;
+  transform:translateZ(0);
+  will-change:transform;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.08),transparent 70%);
+  transform:translateX(-130%);
+  transition:transform .55s var(--ease);
+  pointer-events:none;
+}
+.btn:hover::after{transform:translateX(130%)}
+.hero{
+  min-height:calc(100vh - 68px);
+  display:flex;
+  align-items:center;
+}
+.hero-copy,.hero-art{will-change:transform}
+.hero-art-img{
+  filter:drop-shadow(0 35px 50px rgba(0,0,0,.68));
+}
+.feature-card,.rules-card,.entry-card,.lb-row,.panel,.login-card{
+  box-shadow:0 10px 35px -30px rgba(0,0,0,.7);
+}
+.feature-card{
+  background:linear-gradient(145deg,rgba(17,26,41,.92),rgba(10,16,27,.92));
+}
+.feature-card::before,.rules-card::before,.entry-card::before,.panel::before,.login-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 28%);
+  opacity:.8;
+}
+.feature-card,.rules-card,.entry-card,.panel,.login-card{position:relative}
+.terminal{
+  border-color:rgba(99,201,236,.22);
+  background:
+    linear-gradient(180deg,rgba(5,8,16,.98),rgba(3,6,12,.98)),
+    #050810;
+  box-shadow:0 35px 90px -45px rgba(0,0,0,.9),0 0 0 1px rgba(99,201,236,.025);
+}
+.terminal-bar{
+  min-height:50px;
+  background:linear-gradient(180deg,rgba(21,34,52,.96),rgba(14,23,36,.96));
+}
+.terminal-title{
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.terminal-body{
+  height:360px;
+  padding:20px 22px;
+  scroll-behavior:smooth;
+  background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px);
+  background-size:100% 28px;
+}
+.terminal-body:focus-within{box-shadow:inset 0 0 40px rgba(99,201,236,.025)}
+.term-line{
+  min-height:1.7em;
+  animation:termIn .18s var(--ease);
+}
+@keyframes termIn{
+  from{opacity:0;transform:translateY(3px)}
+  to{opacity:1;transform:none}
+}
+.terminal-input-row{
+  background:rgba(5,8,16,.94);
+}
+.term-prompt{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.term-prompt::before{
+  content:"●";
+  font-size:7px;
+  color:var(--balance);
+  filter:drop-shadow(0 0 5px rgba(116,224,176,.6));
+}
+.terminal-input{
+  min-width:0;
+}
+.terminal-input::selection{background:rgba(99,201,236,.22)}
+.terminal-input-row::after{
+  content:"↑ ↓ history • TAB autocomplete • ENTER run";
+  position:absolute;
+  right:20px;
+  bottom:2px;
+  transform:translateY(100%);
+  font:10px var(--font-mono);
+  color:var(--text-faint);
+  pointer-events:none;
+}
+.terminal-input-row{position:relative;margin-bottom:13px}
+.command-suggestions{
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:100%;
+  margin-bottom:8px;
+  z-index:20;
+  display:none;
+  max-height:250px;
+  overflow:auto;
+  padding:6px;
+  border:1px solid var(--border-strong);
+  border-radius:12px;
+  background:rgba(8,13,22,.96);
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow-xl);
+}
+.command-suggestions.open{display:block}
+.command-suggestion{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:9px 11px;
+  border-radius:8px;
+  font:12px var(--font-mono);
+  color:var(--text-muted);
+}
+.command-suggestion b{color:var(--accent);font-weight:500}
+.command-suggestion span{font:10px var(--font-body);color:var(--text-faint)}
+.command-suggestion.selected,.command-suggestion:hover{
+  background:var(--accent-soft);
+  color:var(--text);
+}
+.command-category{
+  padding:7px 11px 4px;
+  color:var(--text-faint);
+  font:9px var(--font-mono);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.console-toolbar{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-left:auto;
+}
+.console-chip{
+  font:10px var(--font-mono);
+  color:var(--text-faint);
+  padding:4px 7px;
+  border:1px solid var(--border);
+  border-radius:6px;
+}
+.console-chip.online{color:var(--balance);border-color:rgba(116,224,176,.2)}
+.stat-strip{
+  background:rgba(8,13,22,.35);
+  border-radius:16px;
+  overflow:hidden;
+}
+.stat{
+  transition:background .25s ease,transform .25s var(--ease);
+}
+.stat:hover{background:rgba(255,255,255,.018);transform:translateY(-2px)}
+.lb-row{
+  background:linear-gradient(120deg,rgba(17,26,41,.96),rgba(10,16,27,.96));
+}
+.lb-row-wrap:hover .lb-row{
+  box-shadow:0 25px 55px -30px rgba(0,0,0,.9),0 0 0 1px rgba(99,201,236,.035);
+}
+.page-head{
+  background:linear-gradient(180deg,rgba(12,18,30,.32),transparent);
+}
+.toast{
+  backdrop-filter:blur(14px);
+  box-shadow:0 20px 50px -25px rgba(0,0,0,.8);
+}
+@media (max-width:760px){
+  .hero{min-height:auto}
+  .terminal-body{height:320px}
+  .terminal-input-row::after{display:none}
+}
+
+
+/* ============================================================
+   RainSMP Stormfront — stronger visual identity + rain
+   ============================================================ */
+:root{
+  --bg:#030712;
+  --bg-elev:#07101d;
+  --surface:#0a1422;
+  --surface-2:#0e1c2d;
+  --border:rgba(130,185,220,.14);
+  --border-strong:rgba(112,196,235,.30);
+  --accent:#71d7ff;
+  --accent-soft:rgba(113,215,255,.13);
+  --accent-dim:#276b88;
+  --text:#edf8ff;
+  --text-muted:#91a8bc;
+  --text-faint:#52677d;
+  --feature:#71d7ff;
+  --fix:#ffbd72;
+  --event:#a98cff;
+  --balance:#70e6b1;
+}
+body{
+  background:
+    radial-gradient(ellipse 1000px 600px at 50% -20%,rgba(57,148,202,.13),transparent 65%),
+    linear-gradient(180deg,#020610 0%,#050b15 48%,#02050c 100%);
+}
+.bg-gradient{
+  z-index:-1 !important;
+  opacity:.92;
+  background:
+    radial-gradient(ellipse 850px 520px at 10% 0%,rgba(64,172,224,.13),transparent 62%),
+    radial-gradient(ellipse 800px 560px at 95% 18%,rgba(122,91,212,.09),transparent 60%),
+    linear-gradient(180deg,rgba(3,7,16,.35),rgba(2,5,11,.78));
+}
+#rain-canvas{
+  z-index:0;
+  opacity:.82;
+  mix-blend-mode:screen;
+}
+#app{z-index:1}
+header.nav{
+  background:rgba(2,7,15,.57);
+  border-bottom-color:rgba(113,215,255,.13);
+  backdrop-filter:blur(20px) saturate(150%);
+}
+header.nav::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(113,215,255,.4),transparent);
+  opacity:.5;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(113,215,255,.055),transparent 30%),
+    linear-gradient(115deg,transparent 42%,rgba(255,255,255,.018) 50%,transparent 58%);
+}
+.feature-card,.rules-card,.entry-card,.panel,.login-card,.lb-row{
+  background:
+    linear-gradient(145deg,rgba(13,28,44,.88),rgba(5,13,24,.94));
+  border-color:rgba(113,215,255,.10);
+  box-shadow:0 24px 80px -52px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter:blur(12px);
+}
+.feature-card:hover{
+  border-color:rgba(113,215,255,.24);
+  box-shadow:0 32px 80px -45px rgba(0,0,0,.95),0 0 35px -28px rgba(113,215,255,.55);
+}
+.terminal{
+  border:1px solid rgba(113,215,255,.23);
+  border-radius:16px;
+  box-shadow:
+    0 35px 100px -48px rgba(0,0,0,.98),
+    0 0 70px -55px rgba(113,215,255,.8),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+.terminal-bar{
+  background:linear-gradient(180deg,rgba(17,35,54,.98),rgba(8,19,32,.98));
+}
+.terminal-dots span{
+  box-shadow:0 0 9px currentColor;
+}
+.terminal-body{
+  height:390px;
+  min-height:0;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  align-items:stretch;
+}
+.terminal-body .term-line{
+  flex:0 0 auto !important;
+  min-height:1.7em;
+  line-height:1.7;
+  margin:0;
+  position:relative;
+  overflow:visible;
+}
+.term-line.term-echo{
+  color:#e8f6ff;
+  text-shadow:0 0 14px rgba(113,215,255,.08);
+}
+.term-line.term-error{
+  color:#ffc46f;
+  text-shadow:0 0 15px rgba(255,180,90,.08);
+}
+.term-line.term-info{color:#71d7ff}
+.term-line.term-success{color:#70e6b1}
+.term-line.term-welcome{color:#60758b}
+.term-cmd{color:#71d7ff}
+.terminal-input-row{
+  background:rgba(3,8,15,.96);
+  border-top-color:rgba(113,215,255,.13);
+  box-shadow:0 -18px 35px -30px rgba(113,215,255,.3);
+}
+.command-suggestions{
+  background:rgba(4,10,18,.97);
+  border-color:rgba(113,215,255,.24);
+  box-shadow:0 28px 70px -35px rgba(0,0,0,.95),0 0 30px -25px rgba(113,215,255,.7);
+}
+.console-chip{
+  background:rgba(113,215,255,.035);
+}
+.stat-strip{
+  border:1px solid rgba(113,215,255,.07);
+  background:rgba(3,9,17,.36);
+}
+.page-head{
+  background:
+    radial-gradient(ellipse 700px 260px at 50% 0%,rgba(113,215,255,.055),transparent 70%),
+    linear-gradient(180deg,rgba(8,17,29,.55),transparent);
+}
+
+/* Rain streaks should sit visibly above the background, but below all UI. */
+#rain-canvas{
+  filter:drop-shadow(0 0 3px rgba(113,215,255,.16));
+}
+@media (prefers-reduced-motion: reduce){
+  #rain-canvas{opacity:.28}
+}
+
+
+/* ===== RainSMP Smooth Storm system ===== */
+html{scroll-behavior:auto}
+body{
+  background:#050a12;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+#rain-canvas{
+  opacity:.88 !important;
+  filter:none !important;
+  contain:strict;
+  transform:translateZ(0);
+  will-change:contents;
+}
+.bg-gradient{
+  background:
+    radial-gradient(ellipse 1000px 620px at 8% -8%,rgba(71,184,232,.115),transparent 62%),
+    radial-gradient(ellipse 760px 600px at 95% 8%,rgba(115,91,205,.075),transparent 64%),
+    linear-gradient(180deg,#050a12 0%,#050811 52%,#03060c 100%);
+}
+#app{position:relative;z-index:2}
+header.nav,.terminal,.feature-card,.rules-card,.entry-card,.panel,.login-card{
+  transform:translateZ(0);
+}
+header.nav{
+  backdrop-filter:blur(12px) saturate(125%);
+  -webkit-backdrop-filter:blur(12px) saturate(125%);
+}
+header.nav.scrolled .nav-inner{
+  backdrop-filter:blur(14px) saturate(130%);
+  -webkit-backdrop-filter:blur(14px) saturate(130%);
+}
+.feature-card,.rules-card,.entry-card,.panel,.login-card{
+  transition:transform .38s cubic-bezier(.2,.8,.2,1),border-color .38s ease,box-shadow .38s ease,background .38s ease;
+}
+.feature-card:hover,.rules-card:hover,.entry-card:hover{
+  transform:translate3d(0,-5px,0);
+}
+.btn,.nav-inner,.terminal,.lb-row{transform:translateZ(0)}
+.reveal{
+  transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1);
+}
+#loader{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(99,201,236,.085),transparent 27%),
+    linear-gradient(180deg,#040912 0%,#060b14 100%);
+}
+#loader::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(105deg,transparent 0 38%,rgba(99,201,236,.035) 50%,transparent 62%),
+    repeating-linear-gradient(105deg,transparent 0 48px,rgba(113,215,255,.028) 49px,transparent 50px);
+  animation:loaderRain 1.8s linear infinite;
+}
+@keyframes loaderRain{
+  from{transform:translate3d(-70px,-70px,0)}
+  to{transform:translate3d(70px,70px,0)}
+}
+#loader .loader-mark-wrap{z-index:1}
+#loader .brand,#loader .loader-bar{z-index:1}
+#loader .loader-status{
+  z-index:1;
+  min-height:16px;
+  font:10px var(--font-mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  opacity:0;
+  animation:fadeUp .5s ease .55s forwards;
+}
+#loader .loader-status::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  margin-right:7px;
+  background:var(--balance);
+  box-shadow:0 0 12px rgba(116,224,176,.65);
+  animation:statusPulse 1.1s ease-in-out infinite;
+}
+@keyframes statusPulse{50%{opacity:.35;transform:scale(.72)}}
+#loader .loader-progress{
+  z-index:1;
+  width:140px;
+  display:flex;
+  justify-content:flex-end;
+  font:10px var(--font-mono);
+  color:var(--text-faint);
+  opacity:0;
+  animation:fadeUp .5s ease .48s forwards;
+}
+#loader .loader-progress span{color:var(--accent)}
+#loader.done{pointer-events:none}
+@media (max-width:760px){
+  #rain-canvas{opacity:.5 !important}
+  header.nav,.terminal,.feature-card,.rules-card,.entry-card,.panel,.login-card{
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  #loader::before{animation:none}
+  #loader .loader-status::before{animation:none}
+  .feature-card,.rules-card,.entry-card,.panel,.login-card{transition:none}
+}
+
+
+/* Runtime-friendly motion primitives */
+#cursor,#cursor-ring{will-change:transform}
+.click-ripple{will-change:transform,opacity}
+
+
+/* ============================================================
+   RainSMP Stormfront — cinematic motion & scroll system
+   ============================================================ */
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:88px;
+}
+body{
+  background:
+    radial-gradient(900px 600px at 50% -15%,rgba(75,190,235,.14),transparent 65%),
+    linear-gradient(180deg,#02050b 0%,#050b14 46%,#02050a 100%);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 0%,transparent 0%,rgba(0,0,0,.03) 50%,rgba(0,0,0,.28) 100%),
+    linear-gradient(90deg,rgba(0,0,0,.16),transparent 18%,transparent 82%,rgba(0,0,0,.16));
+}
+#rain-canvas{
+  z-index:1 !important;
+  opacity:.88 !important;
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 5px rgba(113,215,255,.15));
+}
+.bg-gradient{z-index:0 !important}
+#app{z-index:3;position:relative}
+
+/* --- cinematic loader --- */
+#loader{
+  z-index:10000;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(74,190,238,.13),transparent 25%),
+    radial-gradient(circle at 20% 80%,rgba(111,90,205,.06),transparent 30%),
+    linear-gradient(180deg,#01050b,#040a13 65%,#01040a);
+  isolation:isolate;
+}
+#loader::after{
+  content:"";
+  position:absolute;
+  inset:-25%;
+  z-index:-1;
+  opacity:.55;
+  background:
+    repeating-linear-gradient(105deg,
+      transparent 0 38px,
+      rgba(113,215,255,.055) 39px,
+      transparent 40px 78px);
+  transform:rotate(-5deg);
+  animation:loaderRain 1.05s linear infinite;
+}
+@keyframes loaderRain{
+  from{transform:translate3d(-90px,-80px,0) rotate(-5deg)}
+  to{transform:translate3d(90px,100px,0) rotate(-5deg)}
+}
+#loader::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(113,215,255,.06),transparent 15%),
+    linear-gradient(90deg,transparent 0 49.7%,rgba(113,215,255,.05) 50%,transparent 50.3%);
+  animation:loaderPulse 2.2s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes loaderPulse{
+  0%,100%{opacity:.35}
+  50%{opacity:.85}
+}
+#loader .loader-mark{
+  box-shadow:
+    0 0 0 1px rgba(143,229,255,.18),
+    0 0 35px rgba(113,215,255,.3),
+    0 25px 65px -20px rgba(0,0,0,.9),
+    inset 0 1px 0 rgba(255,255,255,.5);
+  animation:markIn .65s cubic-bezier(.2,.8,.2,1) forwards,loaderFloat 2.4s ease-in-out .7s infinite;
+}
+@keyframes loaderFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-5px) scale(1.025)}
+}
+#loader .loader-bar{
+  width:210px;
+  height:3px;
+  background:rgba(255,255,255,.055);
+  box-shadow:0 0 25px rgba(113,215,255,.08);
+}
+#loader .loader-bar::after{
+  box-shadow:0 0 14px rgba(113,215,255,.8);
+}
+#loader .loader-status{
+  letter-spacing:.16em;
+}
+#loader .brand{
+  text-shadow:0 0 20px rgba(113,215,255,.16);
+}
+#loader.hide{
+  animation:loaderClip .85s cubic-bezier(.7,0,.3,1) forwards;
+}
+@keyframes loaderClip{
+  0%{clip-path:circle(150% at 50% 50%);opacity:1}
+  55%{opacity:1}
+  100%{clip-path:circle(0% at 50% 50%);opacity:0}
+}
+
+/* --- scroll reveal: blur + depth instead of a basic fade --- */
+.reveal{
+  opacity:0;
+  transform:translate3d(0,42px,0) scale(.985);
+  filter:blur(4px);
+  transition:
+    opacity .8s cubic-bezier(.16,1,.3,1),
+    transform .8s cubic-bezier(.16,1,.3,1),
+    filter .8s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in-view{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+  filter:blur(0);
+}
+.reveal[data-reveal="left"]{transform:translate3d(-45px,0,0) scale(.985)}
+.reveal[data-reveal="right"]{transform:translate3d(45px,0,0) scale(.985)}
+.reveal[data-reveal="scale"]{transform:translate3d(0,22px,0) scale(.92)}
+.reveal[data-reveal="left"].in-view,
+.reveal[data-reveal="right"].in-view,
+.reveal[data-reveal="scale"].in-view{
+  transform:translate3d(0,0,0) scale(1);
+}
+
+/* --- living sections / subtle depth --- */
+.section,.hero,.page-head{
+  position:relative;
+}
+.section::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:min(700px,70%);
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(113,215,255,.14),transparent);
+  opacity:.45;
+}
+.feature-card,.rules-card,.entry-card,.panel,.login-card,.terminal,.lb-row{
+  transform:translateZ(0);
+  will-change:transform;
+}
+.feature-card::after,.rules-card::after,.entry-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 20%,rgba(113,215,255,.055) 48%,transparent 70%);
+  background-size:220% 100%;
+  background-position:200% 0;
+  transition:background-position .9s cubic-bezier(.2,.8,.2,1);
+}
+.feature-card:hover::after,.rules-card:hover::after,.entry-card:hover::after{
+  background-position:-20% 0;
+}
+
+/* Scroll progress line */
+#scroll-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:2px;
+  z-index:10001;
+  transform-origin:left center;
+  transform:scaleX(0);
+  background:linear-gradient(90deg,var(--accent-dim),var(--accent),#b48cf0);
+  box-shadow:0 0 12px rgba(113,215,255,.65);
+  pointer-events:none;
+}
+
+/* Section entrance stagger */
+[data-stagger] > .reveal:nth-child(1){transition-delay:.02s}
+[data-stagger] > .reveal:nth-child(2){transition-delay:.08s}
+[data-stagger] > .reveal:nth-child(3){transition-delay:.14s}
+[data-stagger] > .reveal:nth-child(4){transition-delay:.20s}
+[data-stagger] > .reveal:nth-child(5){transition-delay:.26s}
+[data-stagger] > .reveal:nth-child(6){transition-delay:.32s}
+
+/* Hero parallax layers */
+.hero-copy,.hero-art,.dot-grid{will-change:transform}
+.hero-art{
+  transition:transform .12s linear;
+}
+.dot-grid{
+  transition:transform .18s linear;
+}
+
+/* Nav becomes a floating glass island on scroll */
+header.nav.scrolled{
+  background:rgba(2,7,15,.72);
+  box-shadow:0 18px 60px -35px rgba(0,0,0,.95);
+}
+header.nav.scrolled .nav-inner{
+  border-color:rgba(113,215,255,.13);
+}
+
+/* Better console atmosphere */
+.terminal{
+  background:
+    radial-gradient(circle at 80% 0%,rgba(113,215,255,.055),transparent 30%),
+    linear-gradient(180deg,#02060d,#01040a);
+}
+.terminal-body{
+  background-image:
+    linear-gradient(rgba(113,215,255,.018) 1px,transparent 1px),
+    radial-gradient(circle at 50% 0%,rgba(113,215,255,.035),transparent 48%);
+  background-size:100% 28px,100% 100%;
+}
+.term-line{
+  text-shadow:0 0 10px rgba(113,215,255,.025);
+}
+
+/* Ambient moving light */
+.ambient-light{
+  position:fixed;
+  width:420px;height:420px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:2;
+  background:radial-gradient(circle,rgba(113,215,255,.045),transparent 68%);
+  transform:translate(-50%,-50%);
+  opacity:0;
+  transition:opacity .35s ease;
+  will-change:transform;
+}
+body.pointer-active .ambient-light{opacity:1}
+
+@media (max-width:760px){
+  #rain-canvas{opacity:.68 !important}
+  .reveal,.reveal[data-reveal="left"],.reveal[data-reveal="right"]{
+    transform:translate3d(0,26px,0) scale(.99);
+    filter:blur(2px);
+  }
+  .hero-art,.dot-grid{transition:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #loader::after,#loader::before,#loader .loader-mark{animation:none}
+  .reveal,.reveal[data-reveal="left"],.reveal[data-reveal="right"],.reveal[data-reveal="scale"]{
+    opacity:1;transform:none;filter:none;transition:none;
+  }
+  #rain-canvas{opacity:.3 !important}
+  .ambient-light,#scroll-progress{display:none}
+}
+
 </style>
 </head>
 <body>
 
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
 <canvas id="rain-canvas"></canvas>
 <div class="bg-gradient"></div>
 
@@ -1405,13 +2136,15 @@
   </svg>
 </div>
 
-<div id="loader">
+<div id="loader" aria-label="Loading RainSMP">
   <div class="loader-mark-wrap">
     <div class="loader-glow"></div>
     <div class="loader-mark">R</div>
   </div>
   <div class="brand">RainSMP</div>
   <div class="loader-bar"></div>
+  <div class="loader-progress"><span id="loader-progress-value">0%</span></div>
+  <div class="loader-status">Synchronising with the storm</div>
 </div>
 
 <div id="app">
@@ -1433,7 +2166,7 @@
       <div class="nav-right">
         <button class="btn btn-primary btn-sm" id="nav-copy-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          172.236.155.9:25585
+          172.237.79.35:25585
         </button>
         <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -1466,7 +2199,7 @@
 
         <div class="ip-box">
           <span class="ip-label">Server IP</span>
-          <span class="ip-value">172.236.155.9:25585</span>
+          <span class="ip-value">172.237.79.35:25585</span>
           <button class="copy-btn" id="ip-copy-btn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copy
@@ -1507,7 +2240,7 @@
           <h2 class="section-title">Built for the long game.</h2>
           <p class="section-sub">Everything here is designed to outlast a single weekend — a world worth coming back to.</p>
         </div>
-        <div class="feature-grid">
+        <div class="feature-grid" data-stagger>
           <div class="feature-card reveal">
             <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             <h3>Persistent world</h3>
@@ -1542,14 +2275,14 @@
         <div class="terminal reveal" id="terminal">
           <div class="terminal-bar">
             <div class="terminal-dots"><span></span><span></span><span></span></div>
-            <div class="terminal-title">console — 172.236.155.9:25585</div>
+            <div class="terminal-title">console · 172.237.79.35:25585 · ONLINE</div>
           </div>
           <div class="terminal-body" id="terminal-body">
             <div class="term-line term-welcome">RainSMP console preview. Type <span class="term-cmd">help</span> to see available commands.</div>
           </div>
-          <div class="terminal-input-row">
+          <div class="terminal-input-row"><div class="command-suggestions" id="command-suggestions" aria-label="Command suggestions"></div>
             <span class="term-prompt">guest@rainsmp:~$</span>
-            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a command…">
+            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type a Minecraft command…">
           </div>
         </div>
       </div>
@@ -1585,7 +2318,7 @@
       </div>
     </div>
     <div class="wrap">
-      <div class="rules-grid">
+      <div class="rules-grid" data-stagger>
 
         <div class="rules-card reveal">
           <div class="rules-card-head">
@@ -1754,7 +2487,7 @@
         RainSMP
       </a>
       <div class="footer-meta">
-        <span>172.236.155.9:25585</span>
+        <span>172.237.79.35:25585</span>
         <span>Java 1.20.1</span>
         <span>Est. 2026</span>
       </div>
@@ -1770,77 +2503,145 @@
 
   /* ============ Loading animation ============ */
   var loader = document.getElementById('loader');
+  var loaderProgress = document.getElementById('loader-progress-value');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduceMotion){
     loader.classList.add('done');
   } else {
     var loaderExited = false;
-    var startExit = function(){
+    var progressStart = performance.now();
+    var minLoad = 1450;
+
+    function startExit(){
       if(loaderExited) return;
       loaderExited = true;
+      if(loaderProgress) loaderProgress.textContent = '100%';
       setTimeout(function(){
         loader.classList.add('hide');
-        setTimeout(function(){ loader.classList.add('done'); }, 750);
-      }, 250);
-    };
-    if(document.readyState === 'complete'){
-      startExit();
-    } else {
-      window.addEventListener('load', startExit);
+        setTimeout(function(){ loader.classList.add('done'); }, 720);
+      }, 120);
     }
-    setTimeout(startExit, 4000); // safety net: never leave the loader stuck
+
+    function loaderProgressLoop(now){
+      if(loaderExited) return;
+      var elapsed = now - progressStart;
+      /* Fast at first, then eases toward 92% until the page is ready. */
+      var p = Math.min(0.92, 1 - Math.pow(Math.max(0,1 - elapsed / 1050), 2.2));
+      if(loaderProgress) loaderProgress.textContent = Math.round(p * 100) + '%';
+      requestAnimationFrame(loaderProgressLoop);
+    }
+    requestAnimationFrame(loaderProgressLoop);
+
+    function tryExit(){
+      var elapsed = performance.now() - progressStart;
+      if(elapsed >= minLoad) startExit();
+      else setTimeout(tryExit, minLoad - elapsed);
+    }
+
+    if(document.readyState === 'complete') tryExit();
+    else window.addEventListener('load', tryExit, {once:true});
+    setTimeout(startExit, 4200);
   }
 
-  /* ============ Rain canvas ============ */
+  /* ============ Optimized animated rain ============ */
   var canvas = document.getElementById('rain-canvas');
-  var ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d', { alpha:true, desynchronized:true });
   var drops = [];
-  var W, H;
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+  var W=0, H=0, dpr=1;
+  var rainRunning = true;
+  var rainLast = 0;
+  var rainFrame = 1000 / 55; /* 48 FPS: visibly smooth without burning a full CPU core. */
+
+  function resizeRain(){
+    dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.max(1,Math.floor(W*dpr));
+    canvas.height = Math.max(1,Math.floor(H*dpr));
+    canvas.style.width = W+'px';
+    canvas.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
-  function makeDrop(){
+
+  function makeDrop(initial){
     return {
-      x: Math.random()*W,
-      y: Math.random()*H,
-      len: 10 + Math.random()*18,
-      speed: 4 + Math.random()*5,
-      drift: 1.1,
-      opacity: 0.08 + Math.random()*0.18
+      x:Math.random()*W,
+      y:initial ? Math.random()*H : -40-Math.random()*180,
+      len:13+Math.random()*24,
+      speed:420+Math.random()*300, /* px/sec */
+      drift:42+Math.random()*36,    /* px/sec */
+      opacity:.10+Math.random()*.25,
+      width:.45+Math.random()*.55
     };
   }
-  function initDrops(){
-    drops = [];
-    var count = W < 700 ? 45 : 90;
-    for(var i=0;i<count;i++){ drops.push(makeDrop()); }
+
+  function initRain(){
+    drops.length=0;
+    /* Fewer, longer streaks look more atmospheric and cost substantially less. */
+    var count = W < 700 ? 72 : Math.min(175,Math.round(W/8));
+    for(var i=0;i<count;i++) drops.push(makeDrop(true));
   }
-  function tick(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle = '#63c9ec';
-    ctx.lineCap = 'round';
-    for(var i=0;i<drops.length;i++){
-      var d = drops[i];
-      ctx.globalAlpha = d.opacity;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(d.x, d.y);
-      ctx.lineTo(d.x - d.drift*3, d.y - d.len);
-      ctx.stroke();
-      d.x -= d.drift;
-      d.y += d.speed;
-      if(d.y > H + 20 || d.x < -20){
-        d.x = Math.random()*W + 40;
-        d.y = -20;
-      }
+
+  function drawRain(now){
+    if(reduceMotion || document.hidden) return;
+    if(now-rainLast < rainFrame){
+      requestAnimationFrame(drawRain);
+      return;
     }
-    ctx.globalAlpha = 1;
-    if(!reduceMotion){ requestAnimationFrame(tick); }
+
+    var dt=Math.min((now-(rainLast||now))/1000,.035);
+    rainLast=now;
+    ctx.clearRect(0,0,W,H);
+
+    ctx.lineCap='round';
+    for(var i=0;i<drops.length;i++){
+      var d=drops[i];
+      d.x-=d.drift*dt;
+      d.y+=d.speed*dt;
+
+      if(d.y>H+45 || d.x<-50){
+        d.x=Math.random()*W+25;
+        d.y=-20-Math.random()*140;
+      }
+
+      ctx.globalAlpha=d.opacity;
+      ctx.lineWidth=d.width;
+      ctx.beginPath();
+      ctx.moveTo(d.x,d.y);
+      ctx.lineTo(d.x-d.drift*.035*d.len,d.y-d.len);
+      ctx.strokeStyle='#78d9ff';
+      ctx.stroke();
+    }
+
+    /* One lightweight animated atmospheric glint layer instead of per-drop splashes. */
+    ctx.globalAlpha=.10;
+    ctx.lineWidth=.7;
+    var sweep=(now*.035)%Math.max(1,W+180)-90;
+    ctx.beginPath();
+    ctx.moveTo(sweep,H*.72);
+    ctx.lineTo(sweep-30,H*.72+18);
+    ctx.stroke();
+
+    ctx.globalAlpha=1;
+    requestAnimationFrame(drawRain);
   }
-  resize();
-  initDrops();
-  window.addEventListener('resize', function(){ resize(); initDrops(); });
-  if(!reduceMotion){ requestAnimationFrame(tick); } else { tick(); }
+
+  resizeRain();
+  initRain();
+  window.addEventListener('resize',function(){
+    clearTimeout(window.__rainResize);
+    window.__rainResize=setTimeout(function(){resizeRain();initRain();},120);
+  },{passive:true});
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){
+      rainLast=0;
+    } else {
+      rainLast=performance.now();
+      requestAnimationFrame(drawRain);
+    }
+  });
+  if(!reduceMotion) requestAnimationFrame(drawRain);
+  else { ctx.clearRect(0,0,W,H); }
 
   /* ============ Toast ============ */
   var toast = document.getElementById('toast');
@@ -1854,12 +2655,12 @@
   }
 
   function copyIP(){
-    var text = '172.236.155.9:25585';
+    var text = '172.237.79.35:25585';
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){ showToast('Server IP copied'); })
-        .catch(function(){ showToast('Copy failed — IP is 172.236.155.9:25585'); });
+        .catch(function(){ showToast('Copy failed — IP is 172.237.79.35:25585'); });
     } else {
-      showToast('Copy failed — IP is 172.236.155.9:25585');
+      showToast('Copy failed — IP is 172.237.79.35:25585');
     }
   }
   document.getElementById('ip-copy-btn').addEventListener('click', copyIP);
@@ -2059,7 +2860,7 @@
       ],
       downloadUrl: "https://drive.google.com/uc?export=download&id=1sgTAmTFadQrUpJ4kyUHVffDZo1UpLk6F"
     }
-/*    {
+    /*{
       id: 'seed-6',
       version: 'v1.3.0',
       type: 'feature',
@@ -2090,9 +2891,14 @@
         'Fixed copycats crash',
         'Fixed Witch quest having wrong pineconetown set building',
         'Fixed shift purchasing buying until inventory is full, bankrupting farmers across the valley',
-        'Fixed potential crash with Skull Cavern regeneration',
-        'Fixed fish pond quest selection',
-        'Fixed Client randomly crashing',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
       ],
       downloadUrl: "https://drive.google.com/uc?export=download&id=1sgTAmTFadQrUpJ4kyUHVffDZo1UpLk6F"
     }*/
@@ -2483,6 +3289,7 @@
     window.addEventListener('mouseleave', function(){ document.body.classList.add('cursor-off'); });
     window.addEventListener('mouseenter', function(){ document.body.classList.remove('cursor-off'); });
 
+    var cursorAnimating=false;
     function cursorLoop(){
       var easeFast = reduceMotion ? 1 : 0.55;
       var easeSlow = reduceMotion ? 1 : 0.16;
@@ -2490,11 +3297,20 @@
       curY += (mouseY - curY) * easeFast;
       ringX += (mouseX - ringX) * easeSlow;
       ringY += (mouseY - ringY) * easeSlow;
-      cursorEl.style.transform = 'translate(' + curX + 'px,' + curY + 'px)';
-      cursorRing.style.transform = 'translate(' + ringX + 'px,' + ringY + 'px) translate(-50%,-50%)';
-      requestAnimationFrame(cursorLoop);
+      cursorEl.style.transform = 'translate3d(' + curX + 'px,' + curY + 'px,0)';
+      cursorRing.style.transform = 'translate3d(' + ringX + 'px,' + ringY + 'px,0) translate(-50%,-50%)';
+      if(Math.abs(mouseX-curX)>.2 || Math.abs(mouseY-curY)>.2 || Math.abs(mouseX-ringX)>.2 || Math.abs(mouseY-ringY)>.2){
+        requestAnimationFrame(cursorLoop);
+      } else {
+        cursorAnimating=false;
+      }
     }
-    requestAnimationFrame(cursorLoop);
+    window.addEventListener('mousemove',function(){
+      if(!cursorAnimating){
+        cursorAnimating=true;
+        requestAnimationFrame(cursorLoop);
+      }
+    },{passive:true});
 
     document.addEventListener('mouseover', function(e){
       var target = e.target.closest('a, button, .btn, input, textarea, select, [data-cursor-hover]');
@@ -2568,25 +3384,169 @@
 
   /* ============ Nav scroll state + rain intensity ============ */
   var navEl = document.querySelector('header.nav');
+  var scrollQueued=false;
   function onScroll(){
-    var y = window.scrollY || window.pageYOffset;
-    navEl.classList.toggle('scrolled', y > 40);
-    var intensity = Math.min(0.85, 0.5 + y / 2200);
-    canvas.style.opacity = intensity.toFixed(2);
+    if(scrollQueued) return;
+    scrollQueued=true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      navEl.classList.toggle('scrolled', y > 40);
+      /* Avoid writing styles on every raw scroll event. */
+      canvas.style.opacity = (Math.min(0.82, 0.56 + y / 2600)).toFixed(2);
+      scrollQueued=false;
+    });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ============ Fake terminal ============ */
+
+  /* ============ Cinematic scroll + interaction motion ============ */
+  (function(){
+    var progress = document.getElementById('scroll-progress');
+    var ambient = document.getElementById('ambient-light');
+    var heroCopy = document.querySelector('.hero-copy');
+    var heroArt = document.querySelector('.hero-art');
+    var dotGrid = document.querySelector('.dot-grid');
+    var ticking = false;
+
+    function updateScrollMotion(){
+      var doc = document.documentElement;
+      var max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      var y = window.scrollY || window.pageYOffset || 0;
+      var pct = Math.min(1, Math.max(0, y / max));
+
+      if(progress) progress.style.transform = 'scaleX(' + pct.toFixed(4) + ')';
+
+      /* Small parallax values keep the page alive without causing layout work. */
+      if(!reduceMotion){
+        if(heroCopy) heroCopy.style.transform = 'translate3d(0,' + Math.min(34,y*.055).toFixed(1) + 'px,0)';
+        if(heroArt) heroArt.style.transform = 'translate3d(0,' + Math.min(52,y*.09).toFixed(1) + 'px,0)';
+        if(dotGrid) dotGrid.style.transform = 'translate3d(0,' + Math.min(28,y*.035).toFixed(1) + 'px,0)';
+      }
+      ticking=false;
+    }
+
+    function requestScrollMotion(){
+      if(ticking) return;
+      ticking=true;
+      requestAnimationFrame(updateScrollMotion);
+    }
+
+    window.addEventListener('scroll',requestScrollMotion,{passive:true});
+    window.addEventListener('resize',requestScrollMotion,{passive:true});
+    requestScrollMotion();
+
+    if(ambient && !reduceMotion && window.matchMedia('(pointer:fine)').matches){
+      var mx=window.innerWidth/2,my=window.innerHeight/2;
+      var ax=mx,ay=my;
+      var active=false;
+
+      window.addEventListener('pointermove',function(e){
+        mx=e.clientX; my=e.clientY; active=true;
+        document.body.classList.add('pointer-active');
+      },{passive:true});
+      window.addEventListener('pointerleave',function(){
+        active=false;
+        document.body.classList.remove('pointer-active');
+      },{passive:true});
+
+      function ambientLoop(){
+        ax += (mx-ax)*.075;
+        ay += (my-ay)*.075;
+        if(active) ambient.style.transform='translate3d('+ax+'px,'+ay+'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(ambientLoop);
+      }
+      requestAnimationFrame(ambientLoop);
+    }
+
+    /* Give dynamically inserted page content the same reveal treatment. */
+    var observer = new MutationObserver(function(mutations){
+      mutations.forEach(function(m){
+        if(m.addedNodes && m.addedNodes.length) observeReveals();
+      });
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
+  })();
+
+  /* ============ Lightweight card tilt ============ */
+  (function(){
+    if(reduceMotion || !window.matchMedia('(pointer:fine)').matches) return;
+    var cards = document.querySelectorAll('.feature-card,.rules-card,.entry-card');
+    cards.forEach(function(card){
+      card.addEventListener('pointermove',function(e){
+        var r=card.getBoundingClientRect();
+        var x=(e.clientX-r.left)/r.width-.5;
+        var y=(e.clientY-r.top)/r.height-.5;
+        card.style.transform='perspective(900px) rotateX('+(-y*2.2).toFixed(2)+'deg) rotateY('+(x*2.8).toFixed(2)+'deg) translate3d(0,-5px,0)';
+      },{passive:true});
+      card.addEventListener('pointerleave',function(){
+        card.style.transform='';
+      });
+    });
+  })();
+
+  /* ============ Minecraft-style console ============ */
   (function(){
     var termBody = document.getElementById('terminal-body');
     var termInput = document.getElementById('terminal-input');
     var termWrap = document.getElementById('terminal');
+    var suggestionBox = document.getElementById('command-suggestions');
     if(!termBody || !termInput) return;
 
     var history = [];
-    var histIndex = -1;
+    var histIndex = 0;
+    var suggestionIndex = 0;
     var awaitingPassword = false;
+
+    var COMMANDS = [
+      ['help','Show available commands','General'],
+      ['list','List players currently online','Server'],
+      ['status','Show server status and TPS','Server'],
+      ['seed','Show the world seed','World'],
+      ['time set <day|night|0-24000>','Set the world time','World'],
+      ['time add <ticks>','Advance the world time','World'],
+      ['weather <clear|rain|thunder> [seconds]','Change the weather','World'],
+      ['difficulty <peaceful|easy|normal|hard>','Set difficulty','World'],
+      ['gamerule <rule> [value]','View or change a gamerule','World'],
+      ['gamemode <mode> [player]','Change a player gamemode','Cheat'],
+      ['tp <player> <destination>','Teleport a player','Cheat'],
+      ['give <player> <item> [amount]','Give items','Cheat'],
+      ['effect <player> <effect> [seconds]','Apply an effect','Cheat'],
+      ['summon <entity> [pos]','Summon an entity','Cheat'],
+      ['kill [player]','Kill an entity/player','Cheat'],
+      ['xp <add|set> <player> <amount>','Modify experience','Cheat'],
+      ['op <player>','Grant operator permission','Cheat'],
+      ['deop <player>','Remove operator permission','Admin'],
+      ['kick <player> [reason]','Kick a player','Admin'],
+      ['ban <player> [reason]','Ban a player','Admin'],
+      ['pardon <player>','Unban a player','Admin'],
+      ['whitelist add <player>','Request whitelist access','Server'],
+      ['whitelist remove <player>','Remove a player from whitelist','Admin'],
+      ['whitelist list','Show whitelisted players','Server'],
+      ['say <message>','Broadcast a server message','Chat'],
+      ['tell <player> <message>','Send a private message','Chat'],
+      ['msg <player> <message>','Alias for tell','Chat'],
+      ['me <action>','Broadcast an action','Chat'],
+      ['motd','Show the server MOTD','Server'],
+      ['locate <structure|biome> <name>','Locate a world feature','World'],
+      ['clear','Clear the console','Utility'],
+      ['history','Show command history','Utility'],
+      ['balance [list]','View the balance leaderboard','RainSMP'],
+      ['balance set <player> <amount>','Set a player balance','RainSMP'],
+      ['balance add <player> <amount>','Add to a player balance','RainSMP'],
+      ['balance remove <player>','Remove a player from leaderboard','RainSMP'],
+      ['balance region <player> <na|eu|as|oce>','Set leaderboard region','RainSMP'],
+      ['balance uuid <player> <uuid>','Set player skin UUID','RainSMP'],
+      ['admin login','Authenticate for restricted site tools','Admin']
+    ];
+
+    /* Commands that intentionally cannot be executed from this public console. */
+    var CHEAT_WORDS = [
+      'gamemode','gmode','give','item','effect','enchant','summon','spawn',
+      'teleport','tp','kill','damage','xp','experience','op','execute',
+      'setblock','fill','clone','attribute','advancement','data','loot',
+      'particle','ride','spectate'
+    ];
 
     function termLine(text, cls){
       var line = document.createElement('div');
@@ -2596,10 +3556,11 @@
       termBody.scrollTop = termBody.scrollHeight;
       return line;
     }
-    function termLineHTML(html, cls){
+
+    function termLineHTML(markup, cls){
       var line = document.createElement('div');
       line.className = 'term-line ' + (cls || '');
-      line.innerHTML = html;
+      line.innerHTML = markup;
       termBody.appendChild(line);
       termBody.scrollTop = termBody.scrollHeight;
       return line;
@@ -2611,71 +3572,120 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'btn btn-primary btn-sm term-admin-btn';
-      btn.textContent = 'Open Admin Panel \u2192';
+      btn.textContent = 'Open Admin Panel →';
       btn.addEventListener('click', function(){ location.hash = '#/admin'; });
       line.appendChild(btn);
       termBody.appendChild(line);
       termBody.scrollTop = termBody.scrollHeight;
     }
 
-    var ADMIN_UNLOCK_PASSWORD = 'joeselular78';
-
-    function beginAdminUnlock(){
-      awaitingPassword = true;
-      termLine('Restricted command detected.', 'term-info');
-      termLine('Enter administrator password to continue.', 'term-welcome');
-      termInput.type = 'password';
-      termInput.placeholder = 'password';
+    function escapeRegExp(value){
+      return value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
     }
 
-    function resolveAdminUnlock(pw){
-      awaitingPassword = false;
-      termInput.type = 'text';
-      termInput.placeholder = 'type a command\u2026';
-      if(pw === ADMIN_UNLOCK_PASSWORD){
-        isAdmin = true;
-        termLine('Access granted.', 'term-success');
-        showAdminButton();
-      } else {
-        termLine('Access denied \u2014 incorrect password.', 'term-error');
+    function commandName(command){
+      return command.trim().split(/\s+/)[0].replace(/^\//,'').toLowerCase();
+    }
+
+    function isCheatCommand(cmd){
+      var name = commandName(cmd);
+      return CHEAT_WORDS.indexOf(name) !== -1;
+    }
+
+    function showCheatBlock(){
+      termLine('NO CHEATING ALLOWED', 'term-error');
+      termLine('Cheat commands are disabled on RainSMP because this is a survival gamemode, not Creative.', 'term-welcome');
+    }
+
+    function renderSuggestions(query){
+      if(!suggestionBox) return;
+      var q = query.trim().replace(/^\//,'').toLowerCase();
+      if(!q){
+        suggestionBox.classList.remove('open');
+        suggestionBox.innerHTML = '';
+        return;
       }
+
+      var matches = COMMANDS.filter(function(c){
+        return c[0].toLowerCase().indexOf(q) === 0 ||
+               c[0].toLowerCase().split(' ')[0] === q;
+      }).slice(0,8);
+
+      if(!matches.length){
+        suggestionBox.classList.remove('open');
+        return;
+      }
+
+      suggestionIndex = Math.min(suggestionIndex, matches.length - 1);
+      suggestionBox.innerHTML = matches.map(function(c,i){
+        return '<div class="command-suggestion' + (i === suggestionIndex ? ' selected' : '') +
+          '" data-command="' + escapeHTML(c[0]) + '">' +
+          '<b>/' + escapeHTML(c[0]) + '</b><span>' + escapeHTML(c[1]) + '</span></div>';
+      }).join('');
+      suggestionBox.classList.add('open');
+
+      suggestionBox.querySelectorAll('.command-suggestion').forEach(function(el){
+        el.addEventListener('mousedown', function(ev){
+          ev.preventDefault();
+          termInput.value = el.getAttribute('data-command');
+          suggestionBox.classList.remove('open');
+          termInput.focus();
+        });
+      });
+    }
+
+    function completeCommand(){
+      var q = termInput.value.trim().replace(/^\//,'').toLowerCase();
+      if(!q) return;
+      var matches = COMMANDS.filter(function(c){ return c[0].toLowerCase().indexOf(q) === 0; });
+      if(matches.length === 1){
+        termInput.value = matches[0][0];
+      } else if(matches.length > 1){
+        suggestionIndex = (suggestionIndex + 1) % matches.length;
+        termInput.value = matches[suggestionIndex][0];
+      }
+      renderSuggestions(termInput.value);
+    }
+
+    function safePlayer(raw){
+      return (raw || '').replace(/[^A-Za-z0-9_]/g,'').slice(0,16);
+    }
+
+    function fmtCoins(n){
+      return Number(n || 0).toLocaleString('en-US');
+    }
+
+    function playerList(){
+      return 'There are 0 of a max of 150 players online:';
     }
 
     function runWhitelistAdd(rawName){
-      var safeName = rawName.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 16) || 'player';
-      termLine('Contacting server…', 'term-info');
+      var safeName = safePlayer(rawName) || 'player';
+      termLine('Checking whitelist for ' + safeName + '…', 'term-info');
       setTimeout(function(){
-        var working = termLineHTML('Working on it<span class="term-dots-anim"></span>', 'term-info');
-        setTimeout(function(){
-          working.remove();
-          termLine('Server has retrieved the information for "' + safeName + '".', 'term-success');
-          setTimeout(function(){
-            termLine('\u2713 Request queued \u2014 an admin will review "' + safeName + '" shortly.', 'term-success');
-          }, 550);
-        }, 1500);
-      }, 500);
+        termLine('✓ Whitelist request queued for ' + safeName + '.', 'term-success');
+        termLine('An admin will review the request shortly.', 'term-welcome');
+      }, 250);
     }
 
-    function fmtCoins(n){ return (n || 0).toLocaleString('en-US'); }
-
-    function handleBalanceCommand(cmd){
+    function runBalanceCommand(cmd){
       var lower = cmd.toLowerCase();
-
-      if(lower === 'balance list' || lower === 'balance' ){
+      if(lower === 'balance' || lower === 'balance list'){
         getLBEntries().then(function(entries){
           var sorted = sortLBEntries(entries || []);
-          if(sorted.length === 0){ termLine('Leaderboard is empty.', 'term-info'); return; }
+          if(!sorted.length){ termLine('Leaderboard is empty.', 'term-info'); return; }
           termLine('Balance leaderboard (' + sorted.length + ' players):', 'term-welcome');
-          sorted.forEach(function(e, i){
-            termLine('  ' + (i+1) + '. ' + e.name + ' \u2014 ' + fmtCoins(e.balance) + ' coins \u00b7 ' + (e.region||'na').toUpperCase(), 'term-info');
+          sorted.forEach(function(e,i){
+            termLine('  ' + (i+1) + '. ' + e.name + ' — ' + fmtCoins(e.balance) +
+              ' coins · ' + (e.region || 'na').toUpperCase(), 'term-info');
           });
         });
-        return;
+        return true;
       }
 
       if(!isAdmin){
-        termLine('Access denied. Type "admin login" to authenticate first.', 'term-error');
-        return;
+        termLine('Access denied — administrator authentication required.', 'term-error');
+        return true;
       }
 
       var setMatch = cmd.match(/^balance\s+set\s+(\S+)\s+(-?\d+(?:\.\d+)?)$/i);
@@ -2685,148 +3695,334 @@
       var uuidMatch = cmd.match(/^balance\s+uuid\s+(\S+)\s+([0-9a-fA-F-]{8,36})$/i);
 
       function withPlayer(rawName, fn){
-        var name = rawName.replace(/[^A-Za-z0-9_]/g, '').slice(0, 16);
+        var name = safePlayer(rawName);
         if(!name){ termLine('Invalid player name.', 'term-error'); return; }
         getLBEntries().then(function(entries){
-          entries = entries || [];
-          var idx = entries.findIndex(function(e){ return e.name.toLowerCase() === name.toLowerCase(); });
-          fn(entries, idx, name);
+          fn(entries || [], (entries || []).findIndex(function(e){
+            return String(e.name).toLowerCase() === name.toLowerCase();
+          }), name);
         });
       }
 
       if(setMatch){
-        withPlayer(setMatch[1], function(entries, idx, name){
+        withPlayer(setMatch[1], function(entries,idx,name){
           var amount = parseFloat(setMatch[2]);
-          if(idx >= 0){
-            entries[idx].balance = amount;
-          } else {
-            entries.push({ id:'lb-' + Date.now() + '-' + Math.random().toString(36).slice(2,6), name:name, balance:amount, region:'na', uuid:'' });
-          }
+          if(idx >= 0) entries[idx].balance = amount;
+          else entries.push({id:'lb-'+Date.now(),name:name,balance:amount,region:'na',uuid:''});
           saveLBEntries(entries).then(function(){
-            termLine('\u2713 Set ' + name + '\u2019s balance to ' + fmtCoins(amount) + ' coins.', 'term-success');
-            if(pages.leaderboard && pages.leaderboard.classList.contains('active')){ loadLeaderboard(); }
+            termLine('✓ Set ' + name + ' balance to ' + fmtCoins(amount) + ' coins.', 'term-success');
+            if(pages.leaderboard.classList.contains('active')) loadLeaderboard();
           });
         });
       } else if(addMatch){
-        withPlayer(addMatch[1], function(entries, idx, name){
-          var delta = parseFloat(addMatch[2]);
-          if(idx < 0){ termLine('Player "' + name + '" is not on the leaderboard yet. Use "balance set" first.', 'term-error'); return; }
-          entries[idx].balance = (entries[idx].balance || 0) + delta;
+        withPlayer(addMatch[1], function(entries,idx,name){
+          if(idx < 0){ termLine('Player "'+name+'" is not on the leaderboard yet.', 'term-error'); return; }
+          entries[idx].balance = (entries[idx].balance || 0) + parseFloat(addMatch[2]);
           saveLBEntries(entries).then(function(){
-            termLine('\u2713 ' + name + '\u2019s balance is now ' + fmtCoins(entries[idx].balance) + ' coins.', 'term-success');
-            if(pages.leaderboard && pages.leaderboard.classList.contains('active')){ loadLeaderboard(); }
+            termLine('✓ ' + name + ' balance is now ' + fmtCoins(entries[idx].balance) + ' coins.', 'term-success');
+            if(pages.leaderboard.classList.contains('active')) loadLeaderboard();
           });
         });
       } else if(removeMatch){
-        withPlayer(removeMatch[1], function(entries, idx, name){
-          if(idx < 0){ termLine('Player "' + name + '" is not on the leaderboard.', 'term-error'); return; }
-          entries.splice(idx, 1);
+        withPlayer(removeMatch[1], function(entries,idx,name){
+          if(idx < 0){ termLine('Player "'+name+'" is not on the leaderboard.', 'term-error'); return; }
+          entries.splice(idx,1);
           saveLBEntries(entries).then(function(){
-            termLine('\u2713 Removed ' + name + ' from the leaderboard.', 'term-success');
-            if(pages.leaderboard && pages.leaderboard.classList.contains('active')){ loadLeaderboard(); }
+            termLine('✓ Removed ' + name + ' from the leaderboard.', 'term-success');
+            if(pages.leaderboard.classList.contains('active')) loadLeaderboard();
           });
         });
       } else if(regionMatch){
-        withPlayer(regionMatch[1], function(entries, idx, name){
-          if(idx < 0){ termLine('Player "' + name + '" is not on the leaderboard yet. Use "balance set" first.', 'term-error'); return; }
+        withPlayer(regionMatch[1], function(entries,idx,name){
+          if(idx < 0){ termLine('Player "'+name+'" is not on the leaderboard yet.', 'term-error'); return; }
           entries[idx].region = regionMatch[2].toLowerCase();
           saveLBEntries(entries).then(function(){
-            termLine('\u2713 Set ' + name + '\u2019s region to ' + regionMatch[2].toUpperCase() + '.', 'term-success');
-            if(pages.leaderboard && pages.leaderboard.classList.contains('active')){ loadLeaderboard(); }
+            termLine('✓ Set ' + name + ' region to ' + regionMatch[2].toUpperCase() + '.', 'term-success');
+            if(pages.leaderboard.classList.contains('active')) loadLeaderboard();
           });
         });
       } else if(uuidMatch){
-        withPlayer(uuidMatch[1], function(entries, idx, name){
-          if(idx < 0){ termLine('Player "' + name + '" is not on the leaderboard yet. Use "balance set" first.', 'term-error'); return; }
-          entries[idx].uuid = uuidMatch[2].trim();
+        withPlayer(uuidMatch[1], function(entries,idx,name){
+          if(idx < 0){ termLine('Player "'+name+'" is not on the leaderboard yet.', 'term-error'); return; }
+          entries[idx].uuid = uuidMatch[2];
           saveLBEntries(entries).then(function(){
-            termLine('\u2713 Set ' + name + '\u2019s skin UUID. Their bust render will load from crafty.gg.', 'term-success');
-            if(pages.leaderboard && pages.leaderboard.classList.contains('active')){ loadLeaderboard(); }
+            termLine('✓ Set ' + name + ' skin UUID.', 'term-success');
+            if(pages.leaderboard.classList.contains('active')) loadLeaderboard();
           });
         });
       } else {
-        termLineHTML(
-          'Usage:<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance set &lt;player&gt; &lt;amount&gt;</span><br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance add &lt;player&gt; &lt;amount&gt;</span><br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance remove &lt;player&gt;</span><br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance region &lt;player&gt; &lt;na|eu|as|oce&gt;</span><br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance uuid &lt;player&gt; &lt;uuid&gt;</span><br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance list</span>',
-          'term-error'
-        );
+        termLine('Usage: balance <set|add|remove|region|uuid|list> …', 'term-error');
+      }
+      return true;
+    }
+
+    function beginAdminUnlock(){
+      awaitingPassword = true;
+      termLine('Restricted command detected.', 'term-info');
+      termLine('Enter administrator password to continue.', 'term-welcome');
+      termInput.type = 'password';
+      termInput.placeholder = 'password';
+      if(suggestionBox) suggestionBox.classList.remove('open');
+    }
+
+    function resolveAdminUnlock(pw){
+      awaitingPassword = false;
+      termInput.type = 'text';
+      termInput.placeholder = 'type a Minecraft command…';
+      if(pw === ADMIN_PASSWORD){
+        isAdmin = true;
+        termLine('Access granted. Site admin tools unlocked.', 'term-success');
+        showAdminButton();
+      } else {
+        termLine('Access denied — incorrect password.', 'term-error');
       }
     }
 
     function handleCommand(raw){
       var cmd = raw.trim();
       if(!cmd) return;
+      if(cmd.charAt(0) === '/') cmd = cmd.slice(1);
+
       termLine(cmd, 'term-echo');
       history.push(cmd);
+      if(history.length > 80) history.shift();
       histIndex = history.length;
+      if(suggestionBox) suggestionBox.classList.remove('open');
+
+      if(awaitingPassword){
+        termLine('•'.repeat(Math.max(1,cmd.length)), 'term-echo');
+        resolveAdminUnlock(cmd);
+        return;
+      }
 
       var lower = cmd.toLowerCase();
-      var wlMatch = cmd.match(/^whitelist\s+add\s+(\S+)/i);
+      var parts = cmd.split(/\s+/);
+      var name = commandName(cmd);
+
+      /* Explicit anti-cheat policy comes first. */
+      if(isCheatCommand(cmd)){
+        showCheatBlock();
+        return;
+      }
 
       if(lower === 'admin login' || lower === 'sudo admin'){
         beginAdminUnlock();
-      } else if(lower === 'balance' || lower.indexOf('balance ') === 0){
-        handleBalanceCommand(cmd);
-      } else if(wlMatch){
-        runWhitelistAdd(wlMatch[1]);
-      } else if(lower === 'help'){
-        termLineHTML(
-          'Available commands:<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">whitelist add &lt;player&gt;</span> \u2014 request whitelist access<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">balance list</span> \u2014 view the balance leaderboard<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">status</span> \u2014 server status<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">players</span> \u2014 list players online<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">motd</span> \u2014 message of the day<br>' +
-          '&nbsp;&nbsp;<span class="term-cmd">clear</span> \u2014 clear the console',
-          'term-welcome'
-        );
-      } else if(lower === 'status'){
-        termLine('Server status: online', 'term-success');
-        termLine('TPS 20.0 \u00b7 0/150 players \u00b7 uptime 99.8%', 'term-info');
-      } else if (lower.includes('op')) {
-        termLine('CHEATING IS NOT ALLOWED IN THE SERVER \u00b7', 'term-error');
-      } else if(lower === 'players'){
-        termLine('Online (0 shown): None\u2026', 'term-info');
-      } else if(lower === 'motd'){
-        termLine('"The storm never stops." \u2014 RainSMP', 'term-welcome');
-      } else if(lower === 'clear'){
-        termBody.innerHTML = '';
-      } else {
-        termLine('Unknown command: "' + cmd + '". Type "help" for a list of commands.', 'term-error');
+        return;
       }
+
+      if(lower === 'clear'){
+        termBody.innerHTML = '';
+        termLine('Console cleared. RainSMP console ready.', 'term-welcome');
+        return;
+      }
+
+      if(lower === 'history'){
+        if(!history.length){ termLine('No command history.', 'term-info'); return; }
+        history.slice(-15).forEach(function(c,i){ termLine((i+1)+'. '+c,'term-welcome'); });
+        return;
+      }
+
+      if(lower === 'help' || lower === '?'){
+        termLine('RainSMP console · Minecraft-style command interface', 'term-info');
+        termLine('Cheat commands are intentionally blocked.', 'term-welcome');
+        termLine('Server  · list · status · motd · whitelist · kick · ban · pardon', 'term-welcome');
+        termLine('World   · seed · time · weather · difficulty · gamerule · locate', 'term-welcome');
+        termLine('Chat    · say · tell · msg · me', 'term-welcome');
+        termLine('RainSMP · balance · admin login', 'term-welcome');
+        termLine('Utility · clear · history · help', 'term-welcome');
+        termLine('TAB = autocomplete · ↑/↓ = history · /command also supported', 'term-welcome');
+        return;
+      }
+
+      if(lower === 'list' || lower === 'players'){
+        termLine(playerList(), 'term-info');
+        return;
+      }
+
+      if(lower === 'status'){
+        termLine('Server is online', 'term-success');
+        termLine('TPS 20.0 · 0/150 players · uptime 99.8%', 'term-info');
+        return;
+      }
+
+      if(lower === 'motd'){
+        termLine('"The storm never stops." — RainSMP', 'term-welcome');
+        return;
+      }
+
+      if(lower === 'seed'){
+        termLine('[Server] Seed: -784129563104921337', 'term-info');
+        return;
+      }
+
+      if(name === 'time'){
+        if(parts[1] === 'set'){
+          var value = parts[2] || 'day';
+          if(value === 'day') value = '1000';
+          else if(value === 'night') value = '13000';
+          termLine('Set the time to ' + value + '.', 'term-success');
+        } else if(parts[1] === 'add'){
+          termLine('Added ' + (parts[2] || '0') + ' ticks to the time.', 'term-success');
+        } else {
+          termLine('Usage: time set <day|night|0-24000> | time add <ticks>', 'term-error');
+        }
+        return;
+      }
+
+      if(name === 'weather'){
+        var weather = parts[1] || 'clear';
+        if(['clear','rain','thunder'].indexOf(weather) === -1){
+          termLine('Invalid weather. Use clear, rain, or thunder.', 'term-error');
+        } else {
+          termLine('Changing weather to ' + weather + '.', 'term-success');
+        }
+        return;
+      }
+
+      if(name === 'difficulty'){
+        var diff = parts[1] || '';
+        if(['peaceful','easy','normal','hard'].indexOf(diff) === -1){
+          termLine('Usage: difficulty <peaceful|easy|normal|hard>', 'term-error');
+        } else termLine('The difficulty has been set to ' + diff + '.', 'term-success');
+        return;
+      }
+
+      if(name === 'gamerule'){
+        if(parts.length < 2){
+          termLine('Usage: gamerule <rule> [value]', 'term-error');
+        } else if(parts.length === 2){
+          termLine('Gamerule ' + parts[1] + ' is currently set to true.', 'term-info');
+        } else {
+          termLine('Game rule ' + parts[1] + ' has been updated to ' + parts.slice(2).join(' ') + '.', 'term-success');
+        }
+        return;
+      }
+
+      if(name === 'locate'){
+        if(parts.length < 3){
+          termLine('Usage: locate <structure|biome> <name>', 'term-error');
+        } else {
+          termLine('The nearest ' + parts.slice(1).join(' ') + ' is at [384, ~, -672].', 'term-info');
+        }
+        return;
+      }
+
+      if(name === 'say'){
+        termLine('[Server] ' + cmd.slice(4).trim(), 'term-success');
+        return;
+      }
+
+      if(name === 'tell' || name === 'msg'){
+        var target = safePlayer(parts[1]);
+        var message = parts.slice(2).join(' ');
+        if(!target || !message) termLine('Usage: '+name+' <player> <message>', 'term-error');
+        else termLine('To '+target+': '+message, 'term-success');
+        return;
+      }
+
+      if(name === 'me'){
+        termLine('* Server ' + cmd.slice(3).trim(), 'term-info');
+        return;
+      }
+
+      if(name === 'whitelist'){
+        var sub = (parts[1] || '').toLowerCase();
+        if(sub === 'add') runWhitelistAdd(parts[2]);
+        else if(sub === 'list') termLine('There are 0 whitelisted players.', 'term-info');
+        else if(sub === 'remove'){
+          if(!isAdmin) termLine('Access denied — administrator authentication required.', 'term-error');
+          else termLine('Removed ' + safePlayer(parts[2]) + ' from the whitelist.', 'term-success');
+        } else termLine('Usage: whitelist <add|remove|list> <player>', 'term-error');
+        return;
+      }
+
+      if(name === 'kick' || name === 'ban' || name === 'pardon' || name === 'deop'){
+        if(!isAdmin){
+          termLine('Access denied — administrator authentication required.', 'term-error');
+        } else {
+          var targetPlayer = safePlayer(parts[1]);
+          if(!targetPlayer) termLine('Usage: '+name+' <player> [reason]', 'term-error');
+          else termLine('✓ '+name+' applied to '+targetPlayer+'.', 'term-success');
+        }
+        return;
+      }
+
+      if(lower === 'balance' || lower.indexOf('balance ') === 0){
+        runBalanceCommand(cmd);
+        return;
+      }
+
+      termLine('Unknown command: "' + cmd + '". Type "help" for a list of commands.', 'term-error');
     }
 
+    termInput.addEventListener('input', function(){
+      suggestionIndex = 0;
+      renderSuggestions(termInput.value);
+    });
+
     termInput.addEventListener('keydown', function(ev){
+      if(ev.key === 'Tab'){
+        ev.preventDefault();
+        completeCommand();
+        return;
+      }
+
+      if(ev.key === 'Escape'){
+        if(suggestionBox) suggestionBox.classList.remove('open');
+        return;
+      }
+
+      if(suggestionBox && suggestionBox.classList.contains('open')){
+        var items = suggestionBox.querySelectorAll('.command-suggestion');
+        if(ev.key === 'ArrowDown'){
+          ev.preventDefault();
+          suggestionIndex = Math.min(suggestionIndex + 1, items.length - 1);
+          renderSuggestions(termInput.value);
+          return;
+        }
+        if(ev.key === 'ArrowUp'){
+          ev.preventDefault();
+          suggestionIndex = Math.max(suggestionIndex - 1, 0);
+          renderSuggestions(termInput.value);
+          return;
+        }
+      }
+
       if(ev.key === 'Enter'){
         var val = termInput.value;
         termInput.value = '';
-        if(awaitingPassword){
-          termLine('\u2022'.repeat(val.length || 1), 'term-echo');
-          resolveAdminUnlock(val);
-        } else {
-          handleCommand(val);
-        }
-      } else if(ev.key === 'ArrowUp'){
-        if(history.length && !awaitingPassword){
+        handleCommand(val);
+        return;
+      }
+
+      if(ev.key === 'ArrowUp' && !awaitingPassword){
+        if(history.length){
           histIndex = Math.max(0, histIndex - 1);
           termInput.value = history[histIndex] || '';
-          ev.preventDefault();
+          renderSuggestions(termInput.value);
         }
-      } else if(ev.key === 'ArrowDown'){
-        if(history.length && !awaitingPassword){
+        ev.preventDefault();
+        return;
+      }
+
+      if(ev.key === 'ArrowDown' && !awaitingPassword){
+        if(history.length){
           histIndex = Math.min(history.length, histIndex + 1);
           termInput.value = history[histIndex] || '';
-          ev.preventDefault();
+          renderSuggestions(termInput.value);
         }
+        ev.preventDefault();
       }
     });
 
-    termWrap.addEventListener('click', function(){ termInput.focus(); });
+    termWrap.addEventListener('click', function(){
+      termInput.focus();
+    });
+
+    /* Make the initial prompt feel like a real server console. */
+    setTimeout(function(){
+      termLine('Type "help" for a list of commands.', 'term-welcome');
+    }, 250);
   })();
 
   /* ============ Init ============ */
