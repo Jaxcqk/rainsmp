@@ -2384,6 +2384,193 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
 }
 </style>
 
+
+<style id="rainsmp-live-polish">
+/* ============================================================
+   RainSMP live-status + visual polish
+   ============================================================ */
+:root{
+  --accent:#74d7f4;
+  --accent-2:#7de2c2;
+  --accent-soft:rgba(116,215,244,.12);
+  --accent-dim:#347f9a;
+  --surface:#101a2a;
+  --surface-2:#16253a;
+  --bg:#050912;
+  --bg-elev:#0a1220;
+  --border:rgba(154,190,218,.14);
+  --border-strong:rgba(154,190,218,.27);
+  --text:#eef7fb;
+  --text-muted:#96aabd;
+  --text-faint:#607287;
+  --balance:#7de2c2;
+}
+body{
+  background:
+    radial-gradient(ellipse 900px 520px at 12% -12%,rgba(116,215,244,.13),transparent 62%),
+    radial-gradient(ellipse 780px 520px at 100% 4%,rgba(125,226,194,.075),transparent 58%),
+    linear-gradient(180deg,#050912 0%,#070c16 48%,#04070d 100%);
+}
+.bg-gradient{
+  background:
+    radial-gradient(ellipse 900px 500px at 12% -5%,rgba(116,215,244,.13),transparent 60%),
+    radial-gradient(ellipse 760px 520px at 100% 12%,rgba(125,226,194,.075),transparent 58%),
+    linear-gradient(180deg,#050912 0%,#04070d 100%);
+}
+#rain-canvas{opacity:.48}
+header.nav{
+  background:rgba(5,9,18,.68);
+  border-bottom-color:rgba(154,190,218,.12);
+}
+header.nav.scrolled .nav-inner{
+  background:linear-gradient(135deg,rgba(14,25,41,.91),rgba(9,18,31,.86));
+  border-color:rgba(154,190,218,.22);
+  box-shadow:0 18px 55px -25px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.045);
+}
+.hero{
+  min-height:calc(100vh - 68px);
+}
+.eyebrow{
+  background:linear-gradient(135deg,rgba(116,215,244,.13),rgba(125,226,194,.065));
+  border-color:rgba(116,215,244,.25);
+  box-shadow:0 10px 35px -25px rgba(116,215,244,.7);
+}
+.eyebrow .dot{
+  background:var(--accent-2);
+  box-shadow:0 0 0 3px rgba(125,226,194,.18),0 0 18px rgba(125,226,194,.65);
+}
+.live-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-left:4px;
+  padding:3px 8px;
+  border-radius:999px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  transition:color .25s ease,background .25s ease,border-color .25s ease;
+}
+.live-badge::before{
+  content:"";
+  width:5px;height:5px;border-radius:50%;
+  background:currentColor;
+  box-shadow:0 0 10px currentColor;
+}
+.live-badge.online{
+  color:var(--balance);
+  background:rgba(125,226,194,.08);
+  border-color:rgba(125,226,194,.2);
+}
+.live-badge.offline{
+  color:#ff9b9b;
+  background:rgba(255,120,120,.07);
+  border-color:rgba(255,120,120,.2);
+}
+.live-badge.loading{color:#b5c4d3}
+.headline .accent-text{
+  background:linear-gradient(105deg,#74d7f4 10%,#9be9ff 48%,#7de2c2 92%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 8px 28px rgba(116,215,244,.13));
+}
+.hero-art-glow{
+  background:radial-gradient(ellipse 60% 60% at 50% 45%,rgba(116,215,244,.22),rgba(125,226,194,.045) 42%,transparent 72%);
+}
+.btn-primary{
+  background:linear-gradient(135deg,#82dcf5,#67cbe9);
+  box-shadow:0 10px 30px -13px rgba(116,215,244,.72);
+}
+.btn-primary:hover{
+  box-shadow:0 12px 34px -10px rgba(116,215,244,.85);
+}
+.btn-ghost:hover{
+  border-color:rgba(116,215,244,.42);
+  background:rgba(116,215,244,.055);
+}
+.ip-box{
+  background:linear-gradient(135deg,rgba(16,26,42,.92),rgba(10,18,30,.78));
+  border-color:rgba(154,190,218,.18);
+  box-shadow:0 20px 45px -32px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035);
+}
+.ip-box .copy-btn:hover{color:var(--accent-2)}
+.stat-strip{
+  border-color:rgba(154,190,218,.13)!important;
+  background:linear-gradient(180deg,rgba(13,23,38,.54),rgba(7,13,23,.34));
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 28px 70px -55px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.025);
+  backdrop-filter:blur(14px);
+}
+.stat{
+  padding:23px 24px;
+  border-color:rgba(154,190,218,.11);
+}
+.stat .num{
+  text-shadow:0 0 25px rgba(116,215,244,.07);
+}
+.stat .num .live{
+  background:var(--balance);
+  box-shadow:0 0 0 3px rgba(125,226,194,.14),0 0 14px rgba(125,226,194,.45);
+}
+.stat .stat-max{color:var(--text-faint);font-weight:500}
+.status-value{
+  font-size:24px!important;
+  letter-spacing:-.02em;
+}
+.status-value.online{color:var(--balance);text-shadow:0 0 24px rgba(125,226,194,.16)}
+.status-value.offline{color:#ff9b9b}
+.status-value.loading{color:var(--text-muted)}
+.api-refresh{
+  margin-left:5px;
+  color:var(--text-faint);
+  font-family:var(--font-mono);
+  font-size:10px;
+}
+.live-caption{
+  margin-left:5px;
+  color:var(--text-faint);
+  font-family:var(--font-mono);
+  font-size:10px;
+}
+.feature-card,.rules-card,.entry-card,.lb-row,.panel,.login-card{
+  box-shadow:0 20px 55px -42px rgba(0,0,0,.9);
+}
+.feature-card:hover,.rules-card:hover,.entry-card:hover{
+  border-color:rgba(116,215,244,.22);
+  box-shadow:0 25px 65px -40px rgba(0,0,0,.95),0 0 0 1px rgba(116,215,244,.035);
+}
+.terminal{
+  background:linear-gradient(145deg,#040810,#07111d);
+  border-color:rgba(116,215,244,.17);
+  box-shadow:0 40px 90px -42px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.terminal-bar{
+  background:linear-gradient(180deg,rgba(22,37,58,.94),rgba(13,25,41,.94));
+}
+.terminal-title::after{
+  content:" • LIVE";
+  color:var(--balance);
+}
+.term-line.term-success{color:var(--balance)}
+.term-line.term-info,.term-cmd{color:var(--accent)}
+.timeline::before{
+  background:linear-gradient(180deg,var(--accent) 0%,rgba(116,215,244,.18) 45%,transparent 100%);
+}
+.entry::before{box-shadow:0 0 0 4px rgba(116,215,244,.06),0 0 18px rgba(116,215,244,.22)}
+@media(max-width:680px){
+  .live-badge{margin-left:0}
+  .eyebrow{flex-wrap:wrap}
+  .stat{padding:18px 16px}
+  .status-value{font-size:20px!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -2421,7 +2608,7 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
       <div class="nav-right">
         <button class="btn btn-primary btn-sm" id="nav-copy-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          172.237.79.35:25585
+          72.62.250.11:25565
         </button>
         <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -2443,7 +2630,7 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
       <div class="dot-grid"></div>
       <div class="wrap hero-grid" style="position:relative; z-index:1;">
         <div class="hero-copy">
-        <div class="eyebrow"><span class="dot"></span>RainSMP 2.0 · Season 3 · Whitelist open</div>
+        <div class="eyebrow" id="server-eyebrow"><span class="dot" id="server-dot"></span><span>RainSMP · Forever World · Whitelist On</span><span class="live-badge" id="server-status-badge">Checking status…</span></div>
         <h1 class="headline">The storm never<span class="accent-text">stops.</span></h1>
         <p class="lede">RainSMP is a survival multiplayer world built for long seasons, real economies, and players who stick around after the thunder passes. No resets, no wipes, no shortcuts.</p>
 
@@ -2454,7 +2641,7 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
 
         <div class="ip-box">
           <span class="ip-label">Server IP</span>
-          <span class="ip-value">172.237.79.35:25585</span>
+          <span class="ip-value">72.62.250.11:25565</span>
           <button class="copy-btn" id="ip-copy-btn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copy
@@ -2468,13 +2655,13 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
         </div>
 
         <div class="stat-strip" id="stat-strip">
-          <div class="stat reveal">
-            <div class="num"><span class="live"></span><span class="count-val" data-target="1" data-decimals="0">0</span><span style="color:var(--text-faint); font-weight:500;">/150</span></div>
-            <div class="label">Players online</div>
+          <div class="stat reveal live-stat">
+            <div class="num"><span class="live" id="server-live-dot"></span><span class="count-val" id="players-online" data-target="0" data-decimals="0">0</span><span class="stat-max" id="players-max">/—</span></div>
+            <div class="label">Players online <span class="live-caption" id="player-caption">checking…</span></div>
           </div>
           <div class="stat reveal" style="transition-delay:.08s;">
-            <div class="num"><span class="count-val" data-target="99.8" data-decimals="1">0</span>%</div>
-            <div class="label">Uptime, last 90 days</div>
+            <div class="num status-value" id="server-status-value">Checking…</div>
+            <div class="label">Live server status <span class="api-refresh" id="api-refresh">via mcsrvstat.us</span></div>
           </div>
           <div class="stat reveal" style="transition-delay:.16s;">
             <div class="num">Day 214</div>
@@ -2530,10 +2717,10 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
         <div class="terminal reveal" id="terminal">
           <div class="terminal-bar">
             <div class="terminal-dots"><span></span><span></span><span></span></div>
-            <div class="terminal-title">console · 172.237.79.35:25585 · ONLINE</div>
+            <div class="terminal-title">console · 72.62.250.11:25565 · ONLINE</div>
           </div>
           <div class="terminal-body" id="terminal-body">
-            <div class="term-line term-welcome">RainSMP console preview. Type <span class="term-cmd">help</span> to see available commands.</div>
+            <div class="term-line term-welcome">RainSMP LIVE Console. Type <span class="term-cmd">help</span> to see available commands.</div>
           </div>
           <div class="terminal-input-row"><div class="command-suggestions" id="command-suggestions" aria-label="Command suggestions"></div>
             <span class="term-prompt">guest@rainsmp:~$</span>
@@ -2742,7 +2929,7 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
         RainSMP
       </a>
       <div class="footer-meta">
-        <span>172.237.79.35:25585</span>
+        <span>72.62.250.11:25565</span>
         <span>Java 1.20.1</span>
         <span>Est. 2026</span>
       </div>
@@ -2910,12 +3097,12 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
   }
 
   function copyIP(){
-    var text = '172.237.79.35:25585';
+    var text = '72.62.250.11:25565';
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){ showToast('Server IP copied'); })
-        .catch(function(){ showToast('Copy failed — IP is 172.237.79.35:25585'); });
+        .catch(function(){ showToast('Copy failed — IP is 72.62.250.11:25565'); });
     } else {
-      showToast('Copy failed — IP is 172.237.79.35:25585');
+      showToast('Copy failed — IP is 72.62.250.11:25565');
     }
   }
   document.getElementById('ip-copy-btn').addEventListener('click', copyIP);
@@ -3923,7 +4110,11 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
     }
 
     function playerList(){
-      return 'There are 0 of a max of 150 players online:';
+      var online = document.getElementById('players-online');
+      var max = document.getElementById('players-max');
+      var onlineValue = online ? online.textContent : '—';
+      var maxValue = max ? max.textContent.replace(/^\//,'') : '—';
+      return 'There are ' + onlineValue + ' of a max of ' + maxValue + ' players online:';
     }
 
     function runWhitelistAdd(rawName){
@@ -4107,8 +4298,15 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
       }
 
       if(lower === 'status'){
-        termLine('Server is online', 'term-success');
-        termLine('TPS 20.0 · 0/150 players · uptime 99.8%', 'term-info');
+        var liveStatus = document.getElementById('server-status-value');
+        var livePlayers = document.getElementById('players-online');
+        var liveMax = document.getElementById('players-max');
+        var statusText = liveStatus ? liveStatus.textContent : 'Checking…';
+        var playerText = livePlayers ? livePlayers.textContent : '—';
+        var maxText = liveMax ? liveMax.textContent.replace(/^\//,'') : '—';
+        termLine('Server is ' + statusText.toLowerCase(), statusText === 'Online' ? 'term-success' : 'term-error');
+        termLine('Live player count · ' + playerText + '/' + maxText + ' players', 'term-info');
+        termLine('Status source · mcsrvstat.us API', 'term-welcome');
         return;
       }
 
@@ -4367,6 +4565,136 @@ footer{margin-top:0!important;padding:48px 0!important;background:linear-gradien
   var st=document.createElement('style');
   st.textContent='@keyframes r2Ripple{to{transform:scale(24);opacity:0}}';
   document.head.appendChild(st);
+})();
+</script>
+
+
+<script id="rainsmp-live-status">
+(function(){
+  'use strict';
+
+  /*
+   * Live Java server status.
+   * mcsrvstat.us API v3 returns:
+   *   online, players.online, players.max, version, hostname, etc.
+   */
+  var SERVER_ADDRESS = '72.62.250.11:25565';
+  var API_URL = 'https://api.mcsrvstat.us/3/' + encodeURIComponent(SERVER_ADDRESS);
+  var REFRESH_MS = 300000; // API responses are cached for about 5 minutes.
+
+  var playersEl = document.getElementById('players-online');
+  var maxEl = document.getElementById('players-max');
+  var statusEl = document.getElementById('server-status-value');
+  var badgeEl = document.getElementById('server-status-badge');
+  var dotEl = document.getElementById('server-live-dot');
+  var captionEl = document.getElementById('player-caption');
+  var eyebrowDot = document.getElementById('server-dot');
+  var refreshEl = document.getElementById('api-refresh');
+
+  if(!playersEl || !maxEl || !statusEl) return;
+
+  var previousPlayers = null;
+  var fetchInProgress = false;
+
+  function setState(state, label){
+    statusEl.textContent = label;
+    statusEl.classList.remove('online','offline','loading');
+    statusEl.classList.add(state);
+
+    if(badgeEl){
+      badgeEl.textContent = label;
+      badgeEl.classList.remove('online','offline','loading');
+      badgeEl.classList.add(state);
+    }
+
+    if(eyebrowDot){
+      eyebrowDot.style.background = state === 'online' ? 'var(--balance)' :
+        state === 'offline' ? '#ff9b9b' : 'var(--accent)';
+      eyebrowDot.style.boxShadow = state === 'online'
+        ? '0 0 0 3px rgba(125,226,194,.18),0 0 18px rgba(125,226,194,.65)'
+        : state === 'offline'
+        ? '0 0 0 3px rgba(255,120,120,.14),0 0 14px rgba(255,120,120,.45)'
+        : '0 0 0 3px rgba(116,215,244,.16)';
+    }
+    if(dotEl){
+      dotEl.style.background = state === 'online' ? 'var(--balance)' :
+        state === 'offline' ? '#ff9b9b' : 'var(--accent)';
+    }
+  }
+
+  function animateNumber(el, from, to){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      el.textContent = String(to);
+      return;
+    }
+    var start = performance.now();
+    var duration = 550;
+    function frame(now){
+      var t = Math.min(1,(now-start)/duration);
+      var eased = 1-Math.pow(1-t,3);
+      el.textContent = String(Math.round(from+(to-from)*eased));
+      if(t<1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function applyData(data){
+    if(!data || data.online !== true){
+      animateNumber(playersEl, previousPlayers === null ? 0 : previousPlayers, 0);
+      previousPlayers = 0;
+      maxEl.textContent = '/—';
+      captionEl.textContent = 'server offline';
+      setState('offline','Offline');
+      refreshEl.textContent = 'via mcsrvstat.us';
+      return;
+    }
+
+    var online = Number(data.players && data.players.online || 0);
+    var max = Number(data.players && data.players.max || 0);
+    var version = data.version || (data.protocol && data.protocol.name) || '';
+
+    animateNumber(playersEl, previousPlayers === null ? 0 : previousPlayers, online);
+    previousPlayers = online;
+    maxEl.textContent = '/' + (max > 0 ? max : '—');
+    captionEl.textContent = online === 1 ? 'player online' : 'players online';
+
+    setState('online','Online');
+    refreshEl.textContent = version ? 'v' + String(version).replace(/^v/i,'') : 'via mcsrvstat.us';
+  }
+
+  async function checkServer(){
+    if(fetchInProgress) return;
+    fetchInProgress = true;
+    setState('loading','Checking…');
+    captionEl.textContent = 'checking…';
+
+    try{
+      var response = await fetch(API_URL, {
+        method:'GET',
+        cache:'no-store',
+        headers:{'Accept':'application/json'}
+      });
+      if(!response.ok) throw new Error('HTTP ' + response.status);
+      var data = await response.json();
+      applyData(data);
+    }catch(error){
+      console.warn('[RainValley] Server status check failed:', error);
+      animateNumber(playersEl, previousPlayers === null ? 0 : previousPlayers, 0);
+      previousPlayers = 0;
+      maxEl.textContent = '/—';
+      captionEl.textContent = 'status unavailable';
+      setState('offline','Unavailable');
+      refreshEl.textContent = 'API unavailable';
+    }finally{
+      fetchInProgress = false;
+    }
+  }
+
+  checkServer();
+  window.setInterval(checkServer, REFRESH_MS);
+
+  /* Expose a tiny manual refresh hook for debugging / console use. */
+  window.rainSMPServerStatus = { refresh: checkServer, address: SERVER_ADDRESS };
 })();
 </script>
 
