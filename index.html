@@ -4301,6 +4301,29 @@ header.nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-in
         "Updated Server Website"
       ],
       downloadUrl: "https://drive.google.com/uc?export=download&id=1Y9ALMmktv-rU_piwLbF_73_Zci5jlet-"
+    },
+    {
+      id: 'seed-9',
+      version: 'v1.4.5',
+      type: 'feature',
+      title: 'Society: Rain Valley - Improvement & Performance',
+      author: 'Jaxcqk',
+      date: '2026-10-24',
+      createdAt: 1,
+      changes: [
+        "Focuses on mathematical and logic optimizations in Entity rendering process. By reducing redundant calculations and simplifying frequently executed code paths, it significantly lowers the cost of rendering animated entities",
+        "Reduces micro stutters by 20% when multiple animated entities are present",
+        "New Fancy leaves textures",
+        'Greatly improve your fps when using ShaderPacks playing Create 6.0.',
+        'Offloading partricle vertex transformations to the GPU reduces per-frame data uploads to the GPU, lowers CPU load, and improves frame rates.',
+        "Added Sky color calculation optimizations",
+        "Fix video memory leaks",
+        "Added CoolRain",
+        "Added Icy's Better Horse",
+        "Removed ParticleRain (causing lag when rain/snow)",
+        "Fixed sign not being rendered correctly"
+      ],
+      downloadUrl: "https://drive.google.com/uc?export=download&id=1VUafRjzaR1x0e_--cXYpCXCCzY351-95"
     }
   ];
 
@@ -5651,11 +5674,11 @@ header.nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-in
      Replace the url values with your real modpack files (Google Drive, CDN, etc.).
      Leave a url as '' to show the button as "Coming soon". */
   var DOWNLOADS = {
-    low:  { url: 'https://drive.google.com/uc?export=download&id=18pbJVjXgB9fPlHgMqburFyytXdIskoT7', version: 'v1.4.0' },
-    mid:  { url: 'https://drive.google.com/uc?export=download&id=18pbJVjXgB9fPlHgMqburFyytXdIskoT7', version: 'v1.4.0' },
-    nasa: { url: 'https://drive.google.com/uc?export=download&id=18pbJVjXgB9fPlHgMqburFyytXdIskoT7', version: 'v1.0.0' }
+    low:  { url: 'https://drive.google.com/uc?export=download&id=1VUafRjzaR1x0e_--cXYpCXCCzY351-95', version: 'v1.4.5' },
+    mid:  { url: 'https://drive.google.com/uc?export=download&id=1VUafRjzaR1x0e_--cXYpCXCCzY351-95', version: 'v1.4.5' },
+    nasa: { url: 'https://drive.google.com/uc?export=download&id=1VUafRjzaR1x0e_--cXYpCXCCzY351-95', version: 'v1.4.5' }
   };
-  var DEV_PROGRESS = 63; // % shown on the development progress bar
+  var DEV_PROGRESS = 67; // % shown on the development progress bar
 
   var page = document.getElementById('page-download');
   if(!page) return;
